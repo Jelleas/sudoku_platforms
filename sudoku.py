@@ -3,6 +3,8 @@ from typing import Iterable, Sequence
 
 
 class Sudoku:
+    """A mutable sudoku puzzle."""
+
     def __init__(self, puzzle: Iterable[Iterable]):
         self._grid = []
 
@@ -10,12 +12,13 @@ class Sudoku:
             row = ""
 
             for element in puzzle_row:
-                row += element
+                row += str(element)
             
             self._grid.append(row)
 
 
     def place(self, value: int, x: int, y: int) -> None:
+        """Place value at x,y."""
         row = self._grid[y]
         new_row = ""
 
@@ -29,26 +32,34 @@ class Sudoku:
 
 
     def copy(self) -> "Sudoku":
+        """Creates a deepcopy of this Sudoku puzzle."""
         return Sudoku(self._grid)
 
 
     def value_at(self, x: int, y: int) -> int:
+        """Returns the value at x,y."""
         row = self._grid[y]
         return int(row[x])
 
 
     def options_at(self, x: int, y: int) -> Sequence[int]:
+        """Returns all possible values (options) at x,y."""
         options = [1,2,3,4,5,6,7,8,9]
 
+        # Remove all values from the row
         for value in self.row_values(y):
             if value in options:
                 options.remove(value)
 
+        # Remove all values from the column
         for value in self.column_values(x):
             if value in options:
                 options.remove(value)
 
+        # Get the index of the block based from x,y
         block_index = (y // 3) * 3 + x // 3
+        
+        # Remove all values from the block
         for value in self.block_values(block_index):
             if value in options:
                 options.remove(value)
@@ -139,6 +150,7 @@ class Sudoku:
 
 
 def load_from_file(filename: str) -> Sudoku:
+    """Load a Sudoku from filename."""
     puzzle = []
 
     with open(filename) as f:
