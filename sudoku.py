@@ -1,5 +1,9 @@
+from __future__ import annotations
+from typing import Iterable, Sequence
+
+
 class Sudoku:
-    def __init__(self, puzzle):
+    def __init__(self, puzzle: Iterable[Iterable]):
         self._grid = []
 
         for puzzle_row in puzzle:
@@ -11,7 +15,7 @@ class Sudoku:
             self._grid.append(row)
 
 
-    def place(self, value, x, y):
+    def place(self, value: int, x: int, y: int) -> None:
         row = self._grid[y]
         new_row = ""
 
@@ -24,16 +28,16 @@ class Sudoku:
         self._grid[y] = new_row
 
 
-    def copy(self):
+    def copy(self) -> "Sudoku":
         return Sudoku(self._grid)
 
 
-    def value_at(self, x, y):
+    def value_at(self, x: int, y: int) -> int:
         row = self._grid[y]
         return int(row[x])
 
 
-    def options_at(self, x, y):
+    def options_at(self, x: int, y: int) -> Sequence[int]:
         options = [1,2,3,4,5,6,7,8,9]
 
         for value in self.row_values(y):
@@ -52,7 +56,7 @@ class Sudoku:
         return options
         
 
-    def next_empty_index(self):
+    def next_empty_index(self) -> tuple[int, int]:
         """
         Returns the next index (x,y) that is empty (value 0).
         If there is no empty spot, returns (-1,-1)
@@ -61,11 +65,10 @@ class Sudoku:
             for x in range(9):
                 if self.value_at(x, y) == 0:
                     return x, y
-        
         return -1, -1
 
 
-    def row_values(self, i):
+    def row_values(self, i: int) -> Sequence[int]:
         """Returns all values at i-th row."""
         values = []
 
@@ -75,7 +78,7 @@ class Sudoku:
         return values
 
 
-    def column_values(self, i):
+    def column_values(self, i: int) -> Sequence[int]:
         """Returns all values at i-th column."""
         values = []
 
@@ -85,9 +88,9 @@ class Sudoku:
         return values
 
 
-    def block_values(self, index):
+    def block_values(self, i: int) -> Sequence[int]:
         """
-        Returns all values at index-th block.
+        Returns all values at i-th block.
         The blocks are arranged as follows:
         0 1 2
         3 4 5
@@ -95,8 +98,8 @@ class Sudoku:
         """
         values = []
 
-        x_start = (index % 3) * 3
-        y_start = (index // 3) * 3
+        x_start = (i % 3) * 3
+        y_start = (i // 3) * 3
 
         for x in range(x_start, x_start + 3):
             for y in range(y_start, y_start + 3):
@@ -105,7 +108,7 @@ class Sudoku:
         return values        
 
 
-    def is_solved(self):
+    def is_solved(self) -> bool:
         """
         Returns True if and only if all rows, columns and blocks contain
         only the numbers 1 through 9. False otherwise.
@@ -126,7 +129,7 @@ class Sudoku:
         return True
 
 
-    def __str__(self):
+    def __str__(self) -> str:
         representation = ""
 
         for row in self._grid:
@@ -135,7 +138,7 @@ class Sudoku:
         return representation.strip()
 
 
-def load_from_file(filename):
+def load_from_file(filename: str) -> Sudoku:
     puzzle = []
 
     with open(filename) as f:

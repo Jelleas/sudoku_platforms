@@ -1,10 +1,14 @@
+from __future__ import annotations
+from typing import Union
+
 import argparse
 import os
 import sys
 
-from sudoku import load_from_file
+from sudoku import Sudoku, load_from_file
 
-def solve(sudoku):
+
+def solve(sudoku: Sudoku) -> Union[Sudoku, None]:
     stack = [sudoku]
 
     while stack:
@@ -19,6 +23,8 @@ def solve(sudoku):
             child_sudoku = sudoku.copy()
             child_sudoku.place(option, x, y)
             stack.append(child_sudoku)
+
+    return None
 
 
 if __name__ == "__main__":
