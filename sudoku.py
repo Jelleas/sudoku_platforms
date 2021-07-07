@@ -53,6 +53,10 @@ class Sudoku:
         
 
     def next_empty_index(self):
+        """
+        Returns the next index (x,y) that is empty (value 0).
+        If there is no empty spot, returns (-1,-1)
+        """
         for y in range(9):
             for x in range(9):
                 if self.value_at(x, y) == 0:

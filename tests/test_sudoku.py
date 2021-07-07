@@ -89,10 +89,10 @@ def test_is_solved(sudoku1, sudoku2, sudoku1_solved):
     assert sudoku1_solved.is_solved()
 
 
-def test_next_empty_index(sudoku1, sudoku2):
+def test_next_empty_index(sudoku1, sudoku2, sudoku1_solved):
     assert sudoku1.next_empty_index() == (2, 0)
     assert sudoku2.next_empty_index() == (1, 0)
-
+    assert sudoku1_solved.next_empty_index() == (-1, -1)
 
 def test_place(sudoku1):
     assert sudoku1.value_at(2, 0) == 0

@@ -1,5 +1,8 @@
-from sudoku import load_from_file
+import argparse
+import os
+import sys
 
+from sudoku import load_from_file
 
 def solve(sudoku):
     stack = [sudoku]
@@ -18,14 +21,29 @@ def solve(sudoku):
             stack.append(child_sudoku)
 
 
-sudoku = load_from_file("hard/puzzle4.sudoku")
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Solve a sudoku puzzle.')
 
-print(sudoku)
-print()
-print("SOLVING...")
+    parser.add_argument("puzzle", type=int, help="identifier of the puzzle to be solved")
+    parser.add_argument("-n", type=int, default=1, dest="number_of_runs", help="number of runs")
 
-solved_sudoku = solve(sudoku)
+    args = parser.parse_args()
 
-print("DONE SOLVING")
-print()
-print(solved_sudoku)
+    puzzle_path = f"puzzles/{args.puzzle}.csv"
+
+    if not os.path.exists(puzzle_path):
+        print(f"puzzle {args.puzzle} does not exist")
+        sys.exit(1)
+
+    sudoku = load_from_file(puzzle_path)
+
+    print(sudoku)
+    print()
+    print("SOLVING...")
+
+    for i in range(args.number_of_runs):
+        solved_sudoku = solve(sudoku)
+
+    print("DONE SOLVING")
+    print()
+    print(solved_sudoku)
