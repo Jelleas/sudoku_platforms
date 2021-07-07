@@ -20,7 +20,7 @@ optional arguments:
   -n NUMBER_OF_RUNS  number of runs
 ```
 
-To solve the fourth puzzle ten times, run:
+For instance, to solve the fourth puzzle ten times, run:
 
 ```
 python solve.py -n 10 4
@@ -34,9 +34,11 @@ To test the implementation simply run `pytest` in the root folder of the project
 pytest
 ```
 
+> if the pytest command fails, do make sure all required dependencies are installed via `pip install -r requirements.txt`. Alternatively, if the pytest command is not found, try `python -m pytest` instead.
+
 ## Profiling
 
-To create a profile for 10 runs of solving puzzle 4 run:
+To create a profile run:
 
 ```
 python -m cProfile -o solve.prof solve.py -n 10 4
@@ -48,3 +50,4 @@ This creates a file called `solve.prof` that can then be inspected through:
 snakeviz solve.prof
 ```
 
+> if the snakeviz command fails, do make sure all required dependencies are installed via `pip install -r requirements.txt`. Alternatively, if the snakeviz command is not found, try `python -m snakeviz solve.prof` instead.
