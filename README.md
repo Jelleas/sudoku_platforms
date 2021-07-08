@@ -6,7 +6,6 @@ This project requires Python version 3.7 or later. To install all dependencies r
 pip install -r requirements.txt
 ```
 
-
 ## How to run
 
 ```
@@ -28,8 +27,6 @@ For instance, to solve the fourth puzzle ten times, run:
 ```
 python solve.py -n 10 4
 ```
-
-
 
 ## Testing
 
