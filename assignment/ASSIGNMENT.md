@@ -9,7 +9,7 @@ This is where you step in. Your task is to take this solver and make it run fast
 
 Theoretical analysis of runtime complexity is a helpful tool to evaluate performance of individual functions, algorithms or generally small pieces of code. However, once the codebase grows it gets increasingly harder to do and it becomes less useful too. Odds are that not every function is equally important to the actual runtime of the code. Because afterall, who knows if a function actually gets called during execution and if so, how many times?
 
-This is where profilers step in. Profilers are programs that run your program to analyze its runtime behavior. Simply put profilers build a profile of your program while it is running. They keep track of which functions are called, how many times, how much time is spend in them, etc.  Through this profile you can get a grasp of what your program is actually doing and spending time on.
+This is where profilers step in. Profilers are programs that run your program to analyze its runtime behavior. Simply put, profilers build a profile of your program while it is running. They keep track of which functions are called, how many times, how much time is spend in them, etc.  Through this profile you can get a grasp of what your program is actually doing and spending time on.
 
 > In some cases profilers might also keep track of memory usage of your program, but that is something this assignment does not focus on.
 
@@ -106,14 +106,54 @@ Okay, but what functions is `solve` calling? cProfile does not tell you this in 
 
 ![](snakeviz_sunburst.png)
 
-> Note, the numbers aren't shown by snakeviz. That's just a visual aid for those color blind among us.
+> Note, the numbers aren't shown by snakeviz. That's just a visual aid for those color blind.
 
 The above is just an image, the real thing is interactive. What you see here is a sunburst graph. In the middle is the function `solve`, and each outer layer are functions `solve` calls. The size of each slice represents the cumalative time spend inside that function. So here you see that `solve` ends up calling four functions that are responsible for most if its runtime. Most of these functions then spend their time in other functions too, except for `4` (`next_empty_index`). That one spends about half its time in itself. Which makes sense, because its total time is `1.137` and its cumalative time `2.271`.
 
 The colors in the graph identify a function. You might have noticed all the orange in the graph from number `7`. Turns out, that is the function that was called nine million times (`value_at`). Makes sense, because almost every function in this graph will at some point end up making calls to `value_at`.
 
-## 
 
+## Optimizing
+
+A profile can tell you which parts of the code contribute most to the overall runtime, but not how or why. This is where you as a programmer step in. It is your job to try and figure out why some parts of the code are taking the runtime they take. Then, improve the code so that it runs faster. Not just run faster in theory, but in practice too. You'll do this be reevaluating the code after each improvement. You might just find that a sensible change in theory, does not actually translate to practice.
+
+Note that execution times fluctuate between runs and that a profiler will always add some overhead. Do be sure to run the code sufficiently long (> 10 seconds) before drawing any conclusions. 
+
+Here are some tips to get you started, look out for:
+
+* Loops
+* [Data structures and their operations](https://wiki.python.org/moin/TimeComplexity)
+* Complexity both in big O and big Ω (worst and best case respectively)
+* Duplicated or more generally unnecessary function calls
+* ...
+
+And here is some inspiration as to what you can try:
+
+* Try to avoid loops where reasonably possible. 
+* If a function call is expensive, that is takes up a lot of runtime, it might be worth [caching](https://docs.python.org/dev/library/functools.html#functools.lru_cache) its results. Such that a subsequent call can pull from the cache instead.
+* Misuse of data structures is a common source of performance penalties. Look out for operations that run in O(n) or worse.
+* Besides improving the code within a function, you can also look into reducing the number of calls to the function.
+* ...
+
+And finally, some advice:
+
+* If performance does not meaningfully improve and the code quality degrades, the change is not worth it.
+* If performance does meaninfully improve, it's a win. Code quality comes second for this assignment.
+* Zoom out every now and then. Don't get too caught up in small functions, but think about the program as a whole.
+* Get creative. Is searching for an empty spot really needed? And what about copying? 
+
+
+## What to do
+
+Improve the code in three different ways. For each, write down:
+
+* Why you selected that part of the code.
+* Why you think that code can be improved.
+* What you then changed in the code.
+* What the performance gain is or isn't. In case of isn't, please reflect briefly on why you think the performance does not improve.
+
+
+## Rules of the game
 
 ### Do's
 

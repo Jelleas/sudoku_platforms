@@ -131,7 +131,7 @@ class Sudoku:
                 if value not in self.column_values(i):
                     return False
 
-                if value not in self.column_values(i):
+                if value not in self.row_values(i):
                     return False
 
                 if value not in self.block_values(i):
