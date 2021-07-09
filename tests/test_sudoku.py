@@ -2,9 +2,9 @@ import sys
 import os
 sys.path.append(os.path.abspath('.'))
 
-import pytest
+import pytest  # noqa: E402 # ignore that this import is not top-level
 
-from sudoku import Sudoku
+from sudoku import Sudoku  # noqa: E402 # ignore that this import is not top-level
 
 
 @pytest.fixture
@@ -117,4 +117,3 @@ def test_options_at(sudoku1):
     assert list(sorted(sudoku1.options_at(2, 0))) == [4, 6]
     assert list(sorted(sudoku1.options_at(5, 3))) == [3, 9]
     assert list(sorted(sudoku1.options_at(6, 8))) == [1, 2, 6]
-    

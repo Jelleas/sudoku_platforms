@@ -13,9 +13,8 @@ class Sudoku:
 
             for element in puzzle_row:
                 row += str(element)
-            
-            self._grid.append(row)
 
+            self._grid.append(row)
 
     def place(self, value: int, x: int, y: int) -> None:
         """Place value at x,y."""
@@ -30,21 +29,18 @@ class Sudoku:
 
         self._grid[y] = new_row
 
-
     def copy(self) -> "Sudoku":
         """Creates a deepcopy of this Sudoku puzzle."""
         return Sudoku(self._grid)
-
 
     def value_at(self, x: int, y: int) -> int:
         """Returns the value at x,y."""
         row = self._grid[y]
         return int(row[x])
 
-
     def options_at(self, x: int, y: int) -> Sequence[int]:
         """Returns all possible values (options) at x,y."""
-        options = [1,2,3,4,5,6,7,8,9]
+        options = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
         # Remove all values from the row
         for value in self.row_values(y):
@@ -58,14 +54,13 @@ class Sudoku:
 
         # Get the index of the block based from x,y
         block_index = (y // 3) * 3 + x // 3
-        
+
         # Remove all values from the block
         for value in self.block_values(block_index):
             if value in options:
                 options.remove(value)
 
         return options
-        
 
     def next_empty_index(self) -> tuple[int, int]:
         """
@@ -78,7 +73,6 @@ class Sudoku:
                     return x, y
         return -1, -1
 
-
     def row_values(self, i: int) -> Sequence[int]:
         """Returns all values at i-th row."""
         values = []
@@ -88,7 +82,6 @@ class Sudoku:
 
         return values
 
-
     def column_values(self, i: int) -> Sequence[int]:
         """Returns all values at i-th column."""
         values = []
@@ -97,7 +90,6 @@ class Sudoku:
             values.append(self.value_at(i, j))
 
         return values
-
 
     def block_values(self, i: int) -> Sequence[int]:
         """
@@ -116,15 +108,14 @@ class Sudoku:
             for y in range(y_start, y_start + 3):
                 values.append(self.value_at(x, y))
 
-        return values        
-
+        return values
 
     def is_solved(self) -> bool:
         """
         Returns True if and only if all rows, columns and blocks contain
         only the numbers 1 through 9. False otherwise.
         """
-        values = [1,2,3,4,5,6,7,8,9]
+        values = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
         for i in range(9):
             for value in values:
@@ -139,13 +130,12 @@ class Sudoku:
 
         return True
 
-
     def __str__(self) -> str:
         representation = ""
 
         for row in self._grid:
             representation += row + "\n"
-        
+
         return representation.strip()
 
 
@@ -155,7 +145,7 @@ def load_from_file(filename: str) -> Sudoku:
 
     with open(filename) as f:
         for line in f:
-            
+
             # strip newline and remove all commas
             line = line.strip().replace(",", "")
 

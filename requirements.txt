@@ -1,3 +1,4 @@
 pytest
 snakeviz
 mypy
+flake8

@@ -22,7 +22,7 @@ def solve(sudoku: Sudoku) -> Union[Sudoku, None]:
             return sudoku
 
         x, y = sudoku.next_empty_index()
-        
+
         for option in sudoku.options_at(x, y):
             child_sudoku = sudoku.copy()
             child_sudoku.place(option, x, y)
@@ -59,7 +59,7 @@ if __name__ == "__main__":
     for i in range(args.number_of_runs):
         solved_sudoku = solve(sudoku)
     print("DONE SOLVING")
-    
+
     # Show the solution
     print()
     print(solved_sudoku)

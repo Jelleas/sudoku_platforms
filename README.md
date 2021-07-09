@@ -6,6 +6,8 @@ This project requires Python version 3.7 or later. To install all dependencies r
 pip install -r requirements.txt
 ```
 
+> if the any of the commands below fail, do make sure all required dependencies are installed via `pip install -r requirements.txt`. Alternatively, if for instance the `mypy` command is not found, try `python -m mypy` instead.
+
 ## How to run
 
 ```
@@ -36,7 +38,6 @@ To test the implementation simply run `pytest` in the root folder of the project
 pytest
 ```
 
-> if the `pytest` command fails, do make sure all required dependencies are installed via `pip install -r requirements.txt`. Alternatively, if the `pytest` command is not found, try `python -m pytest` instead.
 
 ## Type-checking
 
@@ -46,7 +47,13 @@ To check the types of the implementation run the following in the root folder of
 mypy *.py
 ```
 
-> if the `mypy` command fails, do make sure all required dependencies are installed via `pip install -r requirements.txt`. Alternatively, if the `mypy` command is not found, try `python -m mypy` instead.
+## Formatting
+
+To check the formatting of the code use:
+
+```
+flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+```
 
 ## Profiling
 
@@ -61,5 +68,3 @@ This creates a file called `solve.prof` that can then be inspected through:
 ```
 snakeviz solve.prof
 ```
-
-> if the `snakeviz` command fails, do make sure all required dependencies are installed via `pip install -r requirements.txt`. Alternatively, if the `snakeviz` command is not found, try `python -m snakeviz solve.prof` instead.
