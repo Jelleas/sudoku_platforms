@@ -9,7 +9,7 @@ This is where you step in. Your task is to take this solver and make it run fast
 
 Theoretical analysis of runtime complexity is a helpful tool to evaluate performance of individual functions, algorithms or generally small pieces of code. However, once the codebase grows it gets increasingly harder to do and it becomes less useful too. Odds are that not every function is equally important to the actual runtime of the code. Because afterall, who knows if a function actually gets called during execution and if so, how many times?
 
-This is where profilers step in. Profilers are programs that run your program to analyze its runtime behavior. Simply put, profilers build a profile of your program while it is running. They keep track of which functions are called, how many times, how much time is spend in them, etc.  Through this profile you can get a grasp of what your program is actually doing and spending time on.
+This is where profilers step in. Profilers are programs that run your program to analyze its runtime behavior. Simply put, profilers build a profile of your program while it is running. They keep track of which functions are called, how many times, how much time is spent in them, etc.  Through this profile you can get a grasp of what your program is actually doing and spending time on.
 
 > In some cases profilers might also keep track of memory usage of your program, but that is something this assignment does not focus on.
 
