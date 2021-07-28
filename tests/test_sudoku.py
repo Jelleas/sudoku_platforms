@@ -101,16 +101,10 @@ def test_place(sudoku1):
     assert sudoku1.value_at(2, 0) == 3
 
 
-def test_copy(sudoku1):
-    sudoku1_copy = sudoku1.copy()
-
-    for x in range(9):
-        for y in range(9):
-            assert sudoku1.value_at(x, y) == sudoku1_copy.value_at(x, y)
-
-    sudoku1.place(3, 2, 0)
-
-    assert sudoku1.value_at(2, 0) != sudoku1_copy.value_at(2, 0)
+def test_unplace(sudoku1):
+    assert sudoku1.value_at(1, 0) == 9
+    sudoku1.unplace(1, 0)
+    assert sudoku1.value_at(1, 0) == 0
 
 
 def test_options_at(sudoku1):

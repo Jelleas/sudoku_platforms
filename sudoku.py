@@ -6,7 +6,7 @@ class Sudoku:
     """A mutable sudoku puzzle."""
 
     def __init__(self, puzzle: Iterable[Iterable]):
-        self._grid = []
+        self._grid: list[str] = []
 
         for puzzle_row in puzzle:
             row = ""
@@ -29,14 +29,23 @@ class Sudoku:
 
         self._grid[y] = new_row
 
-    def copy(self) -> "Sudoku":
-        """Creates a deepcopy of this Sudoku puzzle."""
-        return Sudoku(self._grid)
+    def unplace(self, x: int, y: int) -> None:
+        """Remove (unplace) a number at x,y."""
+        row = self._grid[y]
+        new_row = row[:x] + "0" + row[x + 1:]
+        self._grid[y] = new_row
 
     def value_at(self, x: int, y: int) -> int:
         """Returns the value at x,y."""
-        row = self._grid[y]
-        return int(row[x])
+        value = -1
+
+        for i in range(9):
+            for j in range(9):
+                if i == x and j == y:
+                    row = self._grid[y]
+                    value = int(row[x])
+
+        return value
 
     def options_at(self, x: int, y: int) -> Sequence[int]:
         """Returns all possible values (options) at x,y."""
@@ -67,11 +76,14 @@ class Sudoku:
         Returns the next index (x,y) that is empty (value 0).
         If there is no empty spot, returns (-1,-1)
         """
+        next_x, next_y = -1, -1
+
         for y in range(9):
             for x in range(9):
-                if self.value_at(x, y) == 0:
-                    return x, y
-        return -1, -1
+                if self.value_at(x, y) == 0 and next_x == -1 and next_y == -1:
+                    next_x, next_y = x, y
+
+        return next_x, next_y
 
     def row_values(self, i: int) -> Sequence[int]:
         """Returns all values at i-th row."""
@@ -117,18 +129,20 @@ class Sudoku:
         """
         values = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
+        result = True
+
         for i in range(9):
             for value in values:
                 if value not in self.column_values(i):
-                    return False
+                    result = False
 
                 if value not in self.row_values(i):
-                    return False
+                    result = False
 
                 if value not in self.block_values(i):
-                    return False
+                    result = False
 
-        return True
+        return result
 
     def __str__(self) -> str:
         representation = ""
@@ -141,7 +155,7 @@ class Sudoku:
 
 def load_from_file(filename: str) -> Sudoku:
     """Load a Sudoku from filename."""
-    puzzle = []
+    puzzle: list[str] = []
 
     with open(filename) as f:
         for line in f:

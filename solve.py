@@ -13,20 +13,25 @@ def solve(sudoku: Sudoku) -> Union[Sudoku, None]:
     Solve a Sudoku puzzle using Depth First Search (DFS).
     Returns a Sudoku puzzle if the puzzle is solvable, None otherwise.
     """
-    stack = [sudoku]
+    # If sudoku is solved, nothing to be done
+    if sudoku.is_solved():
+        return sudoku
 
-    while stack:
-        sudoku = stack.pop()
+    # Otherwise, find an empty spot
+    x, y = sudoku.next_empty_index()
 
-        if sudoku.is_solved():
+    # For each possible option at the empty spot
+    for option in sudoku.options_at(x, y):
+
+        # Place that option in the sudoku
+        sudoku.place(option, x, y)
+
+        # Try to solve the remaining sudoku
+        if solve(sudoku):
             return sudoku
 
-        x, y = sudoku.next_empty_index()
-
-        for option in sudoku.options_at(x, y):
-            child_sudoku = sudoku.copy()
-            child_sudoku.place(option, x, y)
-            stack.append(child_sudoku)
+        # If that option did not lead to a solution, unplace
+        sudoku.unplace(x, y)
 
     return None
 
