@@ -63,6 +63,11 @@ if __name__ == "__main__":
     print("SOLVING...")
     for i in range(args.number_of_runs):
         solved_sudoku = solve(sudoku)
+
+        # If this is not the last run, reload the puzzle
+        if i < args.number_of_runs - 1:
+            sudoku = load_from_file(puzzle_path)
+
     print("DONE SOLVING")
 
     # Show the solution
