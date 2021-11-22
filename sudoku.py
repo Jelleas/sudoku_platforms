@@ -47,7 +47,7 @@ class Sudoku:
 
         return value
 
-    def options_at(self, x: int, y: int) -> Sequence[int]:
+    def options_at(self, x: int, y: int) -> Iterable[int]:
         """Returns all possible values (options) at x,y."""
         options = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -85,7 +85,7 @@ class Sudoku:
 
         return next_x, next_y
 
-    def row_values(self, i: int) -> Sequence[int]:
+    def row_values(self, i: int) -> Iterable[int]:
         """Returns all values at i-th row."""
         values = []
 
@@ -94,7 +94,7 @@ class Sudoku:
 
         return values
 
-    def column_values(self, i: int) -> Sequence[int]:
+    def column_values(self, i: int) -> Iterable[int]:
         """Returns all values at i-th column."""
         values = []
 
@@ -103,7 +103,7 @@ class Sudoku:
 
         return values
 
-    def block_values(self, i: int) -> Sequence[int]:
+    def block_values(self, i: int) -> Iterable[int]:
         """
         Returns all values at i-th block.
         The blocks are arranged as follows:
