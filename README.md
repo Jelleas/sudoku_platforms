@@ -3,15 +3,15 @@
 This project requires Python version 3.7 or later. To install all dependencies run: 
 
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
-> if the any of the commands below fail, do make sure all required dependencies are installed via `pip install -r requirements.txt`. Alternatively, if for instance the `mypy` command is not found, try `python -m mypy` instead.
+> if the any of the commands below fail, do make sure all required dependencies are installed via `pip3 install -r requirements.txt`. Alternatively, if for instance the `mypy` command is not found, try `python3 -m mypy` instead.
 
 ## How to run
 
 ```
-$ python solve.py -h
+$ python3 solve.py -h
 usage: solve.py [-h] [-n NUMBER_OF_RUNS] puzzle
 
 Solve a sudoku puzzle.
@@ -27,7 +27,7 @@ optional arguments:
 For instance, to solve the fourth puzzle ten times, run:
 
 ```
-python solve.py -n 10 4
+python3 solve.py -n 10 4
 ```
 
 ## Testing
@@ -60,7 +60,7 @@ flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statist
 To create a profile run:
 
 ```
-python -m cProfile -o solve.prof solve.py -n 10 4
+python3 -m cProfile -o solve.prof solve.py -n 10 4
 ```
 
 This creates a file called `solve.prof` that can then be inspected through:
