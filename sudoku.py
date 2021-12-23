@@ -122,7 +122,7 @@ class Sudoku:
 
         return values
 
-    def block_index_of(self, x, y):
+    def block_index_of(self, x: int, y: int) -> int:
         """Returns the index of a block from an index (x,y)."""
         return (y // 3) * 3 + x // 3
         
