@@ -1,5 +1,5 @@
-import sys
 import os
+import sys
 sys.path.append(os.path.abspath('.'))
 
 import pytest  # noqa: E402 # ignore that this import is not top-level
@@ -65,28 +65,43 @@ def test_value_at(sudoku1):
     assert sudoku1.value_at(5, 3) == 5
 
 
+def test_value_at_out_of_bounds(sudoku1):
+    assert sudoku1.value_at(9, 0) == -1
+    assert sudoku1.value_at(-1, 0) == -1
+    assert sudoku1.value_at(0, 9) == -1
+    assert sudoku1.value_at(0, -1) == -1
+
+
 def test_row_values(sudoku1):
-    assert list(sorted(sudoku1.row_values(0))) == [0, 0, 0, 0, 0, 1, 3, 7, 9]
-    assert list(sorted(sudoku1.row_values(3))) == [0, 0, 0, 0, 0, 0, 0, 2, 5]
-    assert list(sorted(sudoku1.row_values(8))) == [0, 0, 0, 0, 0, 0, 4, 5, 9]
+    assert set(sudoku1.row_values(0)) == {0, 1, 3, 7, 9}
+    assert set(sudoku1.row_values(3)) == {0, 2, 5}
+    assert set(sudoku1.row_values(8)) == {0, 4, 5, 9}
 
 
 def test_column_values(sudoku1):
-    assert list(sorted(sudoku1.column_values(0))) == [0, 0, 0, 0, 0, 4, 6, 7, 8]
-    assert list(sorted(sudoku1.column_values(3))) == [0, 0, 0, 0, 0, 0, 3, 4, 7]
-    assert list(sorted(sudoku1.column_values(8))) == [0, 0, 0, 0, 1, 2, 4, 6, 8]
+    assert set(sudoku1.column_values(0)) == {0, 4, 6, 7, 8}
+    assert set(sudoku1.column_values(3)) == {0, 3, 4, 7}
+    assert set(sudoku1.column_values(8)) == {0, 1, 2, 4, 6, 8}
 
 
 def test_block_values(sudoku1):
-    assert list(sorted(sudoku1.block_values(0))) == [0, 0, 0, 0, 0, 0, 7, 8, 9]
-    assert list(sorted(sudoku1.block_values(3))) == [0, 0, 0, 0, 0, 0, 0, 4, 5]
-    assert list(sorted(sudoku1.block_values(8))) == [0, 0, 0, 0, 0, 0, 4, 5, 8]
+    assert set(sudoku1.block_values(0)) == {0, 7, 8, 9}
+    assert set(sudoku1.block_values(3)) == {0, 4, 5}
+    assert set(sudoku1.block_values(8)) == {0, 4, 5, 8}
 
 
 def test_is_solved(sudoku1, sudoku2, sudoku1_solved):
     assert not sudoku1.is_solved()
     assert not sudoku2.is_solved()
     assert sudoku1_solved.is_solved()
+
+
+def test_is_solved_illegal_solution(sudoku1):
+    for x in range(9):
+        for y in range(9):
+            sudoku1.place(x, y, 1)
+
+    assert not sudoku1.is_solved()
 
 
 def test_next_empty_index(sudoku1, sudoku2, sudoku1_solved):
@@ -108,6 +123,6 @@ def test_unplace(sudoku1):
 
 
 def test_options_at(sudoku1):
-    assert list(sorted(sudoku1.options_at(2, 0))) == [4, 6]
-    assert list(sorted(sudoku1.options_at(5, 3))) == [3, 9]
-    assert list(sorted(sudoku1.options_at(6, 8))) == [1, 2, 6]
+    assert set(sudoku1.options_at(2, 0)) == {4, 6}
+    assert set(sudoku1.options_at(5, 3)) == {3, 9}
+    assert set(sudoku1.options_at(6, 8)) == {1, 2, 6}

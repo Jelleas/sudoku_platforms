@@ -61,8 +61,8 @@ class Sudoku:
             if value in options:
                 options.remove(value)
 
-        # Get the index of the block based from x,y
-        block_index = (y // 3) * 3 + x // 3
+        # Get the index of the block from x,y
+        block_index = self.block_index_of(x, y)
 
         # Remove all values from the block
         for value in self.block_values(block_index):
@@ -122,6 +122,10 @@ class Sudoku:
 
         return values
 
+    def block_index_of(self, x, y):
+        """Returns the index of a block from an index (x,y)."""
+        return (y // 3) * 3 + x // 3
+        
     def is_solved(self) -> bool:
         """
         Returns True if and only if all rows, columns and blocks contain
