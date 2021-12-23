@@ -8,8 +8,8 @@ from sudoku import Sudoku  # noqa: E402 # ignore that this import is not top-lev
 
 
 @pytest.fixture
-def sudoku1():
-    puzzle = [
+def puzzle1():
+    return [
         "7,9,0,0,0,0,3,0,1",
         "0,0,0,0,0,6,9,0,0",
         "8,0,0,0,3,0,0,7,6",
@@ -20,7 +20,11 @@ def sudoku1():
         "0,0,2,3,0,0,0,0,0",
         "0,0,9,0,0,0,0,5,4"
     ]
-    puzzle = [row.replace(",", "") for row in puzzle]
+
+
+@pytest.fixture
+def sudoku1(puzzle1):
+    puzzle = [row.replace(",", "") for row in puzzle1]
     return Sudoku(puzzle)
 
 
@@ -99,15 +103,30 @@ def test_is_solved(sudoku1, sudoku2, sudoku1_solved):
 def test_is_solved_illegal_solution(sudoku1):
     for x in range(9):
         for y in range(9):
-            sudoku1.place(x, y, 1)
+            sudoku1.place(1, x, y)
 
     assert not sudoku1.is_solved()
 
 
 def test_next_empty_index(sudoku1, sudoku2, sudoku1_solved):
-    assert sudoku1.next_empty_index() == (2, 0)
-    assert sudoku2.next_empty_index() == (1, 0)
+    x, y = sudoku1.next_empty_index()
+    assert sudoku1.value_at(x, y) == 0
+
+    x, y = sudoku2.next_empty_index()
+    assert sudoku2.value_at(x, y) == 0
+
     assert sudoku1_solved.next_empty_index() == (-1, -1)
+
+
+def test_next_empty_index_repeatedly(puzzle1, sudoku1):
+    num_empty_spots = sum(row.count("0") for row in puzzle1)
+
+    for _ in range(num_empty_spots):    
+        x, y = sudoku1.next_empty_index()
+        assert sudoku1.value_at(x, y) == 0
+        sudoku1.place(1, x, y)
+    
+    assert sudoku1.next_empty_index() == (-1, -1)
 
 
 def test_place(sudoku1):
